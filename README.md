@@ -6,6 +6,7 @@ A simple performant XHTML parser, originally made for Exir library's CLI scripts
 It does not comply to any specific RFC and was solely made for parsing Vue/Angular-like templates.
 
 <h3>Example</h3>
+
 Run example.js:
 ```shell
 node example.js
