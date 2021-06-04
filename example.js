@@ -1,5 +1,5 @@
 const fs = require("fs");
-const parse = require("./xtmlparser");
+const parse = require("./xhtmlparser");
 
 let template = fs.readFileSync('./example.vue').toString();
 
