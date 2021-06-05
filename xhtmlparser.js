@@ -1,4 +1,4 @@
-const charExp = /[\w-_.:!@]/;
+const charExp = /[\w-_.:!@?]/;
 const spaceExp = /[\s\r\n]/;
 
 function parseTag(str, index = 0) {
@@ -52,7 +52,7 @@ function parseTag(str, index = 0) {
                     stage = 2;
                     continue;
                 } else {
-                    throw SyntaxError('something ' + cur)
+                    throw SyntaxError('tag name {{' + cur + '}} @'+ index)
                 }
             }
             index++;
@@ -211,11 +211,11 @@ function parseTag(str, index = 0) {
     }
 
     return [index, {
-        startIndex,
-        endIndex: index,
         tagName: name,
         attributes: attributes,
-        childNodes: children
+        childNodes: children,
+        startIndex,
+        endIndex: index
     }]
 
 }
