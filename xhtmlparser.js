@@ -1,4 +1,4 @@
-const charExp = /[\w-_.:!@?]/;
+const charExp = /[\w-_.:!@?]/i;
 const spaceExp = /[\s\r\n]/;
 
 function parseTag(str, index = 0) {
@@ -182,7 +182,7 @@ function parseTag(str, index = 0) {
     }
 
     if (stage < 3) {
-        if (lowerName !== 'script' || lowerName !== 'style') {
+        if (lowerName !== 'script' && lowerName !== 'style') {
             [index, children] = parseNodes(str, index, name)
         } else {
             // capture literal script
