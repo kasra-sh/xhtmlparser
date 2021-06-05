@@ -96,7 +96,9 @@ function parseTag(str, index = 0) {
                     continue;
                 }
                 if (spaceExp.test(cur)) attrValue = null;
-                else throw SyntaxError('Malformed attribute at ' + index + ' "' + attrName + '": ...' + str.slice(index - 10, index + 10) + '...')
+                else {
+                    throw SyntaxError('Malformed attribute at ' +cur+' '+ index + ' {{' + attrName +'='+attrValue+ '}} : ...' + str.slice(index - 5, index + 5) + '...')
+                }
                 break;
             }
             if (stage > 1) {
@@ -115,22 +117,25 @@ function parseTag(str, index = 0) {
                 index++;
                 literalEnd = cur;
             } else {
-                // deal with badly written attribute value
-                throw SyntaxError('Attribute value must be quoted')
+                index++;
+                literalEnd = ' >'
+                // throw SyntaxError('Attribute value must be quoted')
             }
 
+            // capture attribute VALUE literal
             while (index < length) {
                 cur = str[index];
+                const next = str[index + 1];
                 // escape
-                if (cur === '\\' && str[index + 1] === literalEnd) {
-                    // if (str[index+1] === literalEnd) {
-                    attrValue += literalEnd;
+                if (cur === '\\' && literalEnd.indexOf(next)>=0) {
+                    attrValue += next;
                     index += 2;
                     continue;
-                    // }
                 }
-                if (cur === literalEnd) {
-                    index += 1;
+
+                // finish
+                if (literalEnd.indexOf(cur)>=0) {
+                    if (cur!=='>')index += 1;
                     break;
                 }
                 attrValue += cur;
